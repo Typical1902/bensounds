@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+		<html lang="en">
+		<head>
+			<meta charset="UTF-8">
+			<title>Ben</title>
+			<meta name="viewport" content="width=device-width, initial-scale=1.0">
+			<link rel="stylesheet" href="material.min.css">
+			<style>
+				.page-content .mdl-button {
+					margin: 10px;
+				}
+			</style>
+		</head>
+		<body>
+			<!-- Simple header with fixed tabs. -->
+			<div class="mdl-layout mdl-js-layout mdl-layout--fixed-header mdl-layout--fixed-tabs">
+				<header class="mdl-layout__header">
+					<div class="mdl-layout__header-row">
+						<!-- Title -->
+						<span class="mdl-layout-title">Ben</span>
+					</div>
+					<!-- Tabs -->
+					<div class="mdl-layout__tab-bar mdl-js-ripple-effect"><a href="#tab_e" class="mdl-layout__tab is-active">E</a>
+					</div>
+				</header>
+				<main class="mdl-layout__content">
+						<section class="mdl-layout__tab-panel" id="tab_e">
+							<div class="page-content"><button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" data-url="Yes.wav">Yes</button><button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" data-url="No.wav">No</button><button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" data-url="Hohoho.wav">Hohoho</button><button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" data-url="Ben.wav">Ben</button><button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" data-url="Augg.wav">Ring</button></div>
+						</section>
+						
+				</main>
+			</div>
+			<audio></audio>
+			<script src="material.min.js"></script>
+			<script>
+				var playAudio = (function(){
+					var $AUDIO = document.getElementsByTagName('audio')[0];
+
+					return function( url ){
+						if( !$AUDIO.paused ){
+							$AUDIO.pause();
+						}
+
+						$AUDIO.src = url;
+						$AUDIO.play();
+					}
+				}());
+
+				document.addEventListener('click', function(e){
+					if( e.target.dataset.hasOwnProperty('url') ){
+						playAudio('sounds/' + e.target.dataset.url);
+						return;
+					}
+				}, false);
+
+				if ('serviceWorker' in navigator){
+					navigator.serviceWorker.register('sw.js').then(function(registration) {
+						// Registration was successful
+						console.log('ServiceWorker registration successful with scope: ',    registration.scope);
+					}).catch(function(err) {
+						// registration failed :(
+						console.log('ServiceWorker registration failed: ', err);
+					});
+				}
+			</script>
+		</body>
+		</html>
